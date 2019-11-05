@@ -14,7 +14,9 @@ export default class LoginForm extends Component {
     ev.preventDefault()
     const { user_name, password } = ev.target
 
+    // save TOKEN_KEY and token in local storage
     TokenService.saveAuthToken(
+      // uses btoa() method to encode the user_name and password in base-64
       TokenService.makeBasicAuthToken(user_name.value, password.value)
     )
 
@@ -27,7 +29,8 @@ export default class LoginForm extends Component {
     ev.preventDefault()
     this.setState({ error: null })
     const { user_name, password } = ev.target
-
+    // makes a post request with the credentials to /api/auth/login endpoint
+    // Q - user_name and password are being sent to the server as plain text?
     AuthApiService.postLogin({
       user_name: user_name.value,
       password: password.value,
@@ -35,6 +38,7 @@ export default class LoginForm extends Component {
       .then(res => {
         user_name.value = ''
         password.value = ''
+        // if successful, receives a JWT as a response then saves to local storage
         TokenService.saveAuthToken(res.authToken)
         this.props.onLoginSuccess()
       })
@@ -57,6 +61,7 @@ export default class LoginForm extends Component {
           <label htmlFor='LoginForm__user_name'>
             User name
           </label>
+          {/* form inputs and button are functional components inside Utils.js */}
           <Input
             required
             name='user_name'

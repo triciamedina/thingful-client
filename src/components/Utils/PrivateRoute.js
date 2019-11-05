@@ -8,6 +8,7 @@ export default function PrivateRoute({ component, ...props }) {
     <Route
       {...props}
       render={componentProps => (
+        // checks if there is a token saved in local storage
         TokenService.hasAuthToken()
           ? <Component {...componentProps} />
           : <Redirect

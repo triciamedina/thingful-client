@@ -16,6 +16,7 @@ const ThingApiService = {
   getThing(thingId) {
     return fetch(`${config.API_ENDPOINT}/things/${thingId}`, {
       headers: {
+        // Q - are headers in requests case insensitive?
         'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })
